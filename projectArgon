@@ -1,0 +1,57 @@
+//Setting variables for I/O pins
+int motor = D2;
+int soilSensor = A1;
+int led = D7;
+
+//Particle Function to allow IFTTT to activate motor and buzzer.
+int waterPlant(String command){
+    
+    if (command=="on"){
+        digitalWrite(motor, HIGH);
+        
+        delay(2000); //The motor pump approx. 100ml of water supply.
+        
+        digitalWrite(motor, LOW);
+        Particle.publish("motor_status", "ACTIVE", PRIVATE);
+    
+        return 1;
+    }
+    else{
+        return -1;
+    }
+    
+}
+
+void setup() {
+    pinMode(motor, OUTPUT);
+    pinMode(soilSensor, INPUT);
+    
+    Particle.function("waterPlant", waterPlant);
+}
+
+void loop() {
+    
+    long moist_level = analogRead(soilSensor);
+    
+    if (moist_level<2800){
+        
+        digitalWrite(led, HIGH);
+        //digitalWrite(motor, HIGH);
+        digitalWrite(motor, HIGH);
+        
+        delay(2000);
+        
+        digitalWrite(led, LOW);
+       //digitalWrite(motor, LOW);
+        digitalWrite(motor, LOW);
+        
+        //Publish that the motor was switched on.
+        Particle.publish("motor_status", "ACTIVE", PRIVATE);
+
+    }
+    
+    //Publish soil moisture level.
+    Particle.publish("moisture_level", String(moist_level), PRIVATE);
+    
+    delay(300000); //5 Minute delay.
+}
