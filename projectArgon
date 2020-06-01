@@ -2,6 +2,7 @@
 int motor = D2;
 int soilSensor = A1;
 int led = D7;
+int threshold = 2800; //Threshold soil moisture level
 
 //Particle Function to allow IFTTT to activate motor and buzzer.
 int waterPlant(String command){
@@ -33,7 +34,7 @@ void loop() {
     
     long moist_level = analogRead(soilSensor);
     
-    if (moist_level<2800){
+    if (moist_level<threshold){
         
         digitalWrite(led, HIGH);
         //digitalWrite(motor, HIGH);
