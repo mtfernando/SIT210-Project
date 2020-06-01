@@ -1,0 +1,33 @@
+//This code will read 3000 values from a soil moisture sensor and return the average value.
+//Use this code to find the soil moisture level of a healthy plant with nourished soil. 
+//This value can then be used as a threshold value to be maintained by the system.
+
+int soilSensor = A1;
+int LED = D7;
+long total =0;
+void setup() {
+pinMode(soilSensor, INPUT);
+pinMode(LED, OUTPUT);
+}
+
+void loop() {
+    
+    for(int i=0; i<3000; i++)
+    {
+    
+    long moist = analogRead(soilSensor);
+    Particle.publish("Moisture_Level", String(moist), PRIVATE);
+    if (moist>10){
+        digitalWrite(LED, HIGH);
+        digitalWrite(LED, LOW);
+    }
+    
+    delay(500);
+    
+    total += moist;
+    }
+    
+    long mean_val = (total/3000);
+    Particle.publish("MEAN_VALUE", String(mean_val), PRIVATE);
+    //The mean value is finally published and can be viewed on the particle console.
+}
