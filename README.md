@@ -1,5 +1,5 @@
 # SIT210-Project
-Smart Plant Watering System
+Smart Plant Watering System.
 
 The default threshold value for projectArgon's soil moisture is 2800.
 
