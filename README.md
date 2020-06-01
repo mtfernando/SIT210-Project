@@ -10,3 +10,5 @@ The projectArgon file is the main file in this repository that will run the syst
 
 The soil moisture sensor must be conntected to A1 and the motor to D2 of the Particle Argon.
 If they're connected differently, update the motor and soilSensor variables of the porjectArgon file accordingly.
+
+![Prototype Architecture](https://user-images.githubusercontent.com/54390998/83386913-2c304300-a42f-11ea-84ce-8a17eb30e4ec.jpg)
